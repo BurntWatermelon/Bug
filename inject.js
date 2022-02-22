@@ -5,22 +5,21 @@ function checkoutHandler(){
 
     // Gets users actual cart...
     $.getJSON('/cart.js', function(cart) {
-        window.offerme.cart = cart;
         $.ajax({
             type: "POST",
             url: "http://634d98f12700.ngrok.io",
-            data: {cart_json: window.offerme,store_id: window.offerme.store_id,cart_collections: JSON.stringify(window.offerme.cart_collections)},
+            data: {},
             crossDomain: true,
             // This is recursive its rehitting
             success: function(res) {
                 console.log("IN RES")
                 console.log(res)
 
-                if(typeof res == "string"){
-                    window.location.href = res // this is setting the custom URL!
-                }else{
+//                 if(typeof res == "string"){
+//                     window.location.href = res // this is setting the custom URL!
+//                 }else{
                     window.location.href = "/checkout" // this is fallback without discount..
-                }
+              //  }
 
                 // To update cart we will take res and hit /cart/change.js ... but we want to actually show the discount with cross out the way hulk does it
                 //hmm actually it doesnt look like we can do that, I think we need to remove the item and call add.js for the new price
@@ -45,30 +44,30 @@ function checkoutHandler(){
 
 // HULK CODE IS ABLE TO SHOW DISCOUNT ON CART>.. FIGURE THAT OUT TOO
 function pricingHandler(){
-   // Ok in hulkcode do action, they call get_cart_details on cart page the data response then modifies some css elements to show discount
+  
 
 
-    // We do pricing, wait for response, then modify UI ... but this should all be done before rendering?? or modify dom on fly
-    $.ajax({
-        type: "POST",
-        url: window.offerme.url + "/pricing",
-        data: {cart_json: window.offerme,store_id: window.offerme.store_id,cart_collections: JSON.stringify(window.offerme.cart_collections)},
-        crossDomain: true,
-        success: function(data){
-            console.log("RES Pricing")
+//     // We do pricing, wait for response, then modify UI ... but this should all be done before rendering?? or modify dom on fly
+//     $.ajax({
+//         type: "POST",
+//         url: window.offerme.url + "/pricing",
+//         data: {cart_json: window.offerme,store_id: window.offerme.store_id,cart_collections: JSON.stringify(window.offerme.cart_collections)},
+//         crossDomain: true,
+//         success: function(data){
+//             console.log("RES Pricing")
 
-            console.log(data)
+//             console.log(data)
 
-            showCartDiscounts(data)
+//             showCartDiscounts(data)
 
 
-            $(checkout_selectors).attr('disabled', false);
-          // hulkappsDoActions(data)
-        },
-        error: function (request, error) {
-            $(checkout_selectors).attr('disabled', false);
-        }
-    });
+//             $(checkout_selectors).attr('disabled', false);
+//           // hulkappsDoActions(data)
+//         },
+//         error: function (request, error) {
+//             $(checkout_selectors).attr('disabled', false);
+//         }
+//     });
 
 
 }
