@@ -7,7 +7,7 @@ function checkoutHandler(){
     $.getJSON('/cart.js', function(cart) {
         $.ajax({
             type: "POST",
-            url: "http://634d98f12700.ngrok.io",
+            url: "http://9ff33436b111.ngrok.io",
             data: {},
             crossDomain: true,
             // This is recursive its rehitting
